@@ -12,6 +12,7 @@ node index.js
 
 ### Use Postman to test the API
 https://www.postman.com/
+POST: raw json
 
 #### Useful Links
 https://medium.com/@brianwu291/learn-basic-node-part2-building-restful-api-by-using-express-d9fefbeefa41
