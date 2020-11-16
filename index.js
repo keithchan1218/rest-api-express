@@ -3,12 +3,14 @@ const app = express();
 // for request body support JSON format (middleware)
 app.use(express.json());
 
+// local storage
 const transport = [
   {name:'Bus', people:50},
   {name:'Taxi', people:5},
   {name:'Walk', people:1}
 ];
 
+// 1. GET
 app.get('/',(req, res) => {
   res.send('Welcome to Mini World Transportation');
 });
@@ -18,19 +20,22 @@ app.get('/api/transport', (req, res) => {
 });
 
 app.get('/api/transport/:name', (req, res) => {
-  // transport.find((item,index)=>{
-  //   if(item.name == req.params.name)
-  //   res.send(transport[index]);
-  // });
   let result = transport.find(item=>item.name == req.params.name);
   if(!result)
     res.status(404).send({
       'status':'Error',
       'returnData':'Error transportation type!'
     });
-  res.send(result)
+  res.send(result);
+  /* same as this code block
+    transport.find((item,index)=>{
+      if(item.name == req.params.name)
+      res.send(transport[index]);
+    });
+  */
 });
 
+// 2. POST
 // Add new transport
 app.post('/api/transport',(req,res)=>{
 
@@ -62,6 +67,7 @@ app.post('/api/transport',(req,res)=>{
 
 });
 
+// 3. DELETE
 app.delete('/api/transport/:name',(req,res)=>{
   transport.find((item,index)=>{
     if(item.name === req.params.name){
@@ -78,8 +84,8 @@ app.delete('/api/transport/:name',(req,res)=>{
   });
 });
 
+// Handle dynamic port
 const port = process.env.PORT || 3000;
-
 app.listen(port, () => {
   console.log(`Listening on port ${port}...`);
 });
